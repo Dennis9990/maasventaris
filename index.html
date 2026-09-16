@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Maas Techniek Inventaris</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+    <div class="app">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+
+                <img src="assets/Afbeelding1.png" alt="Maas Techniek Inventaris">
+
+            </div>
+
+
+            <nav>
+
+                <button class="nav-button active" data-page="dashboard">
+                    📊 Dashboard
+                </button>
+
+
+                <button class="nav-button" data-page="inventory">
+                    📦 Inventaris
+                </button>
+
+
+                <button class="nav-button" data-page="barcode">
+                    🔍 Barcode
+                </button>
+
+
+                <button class="nav-button" data-page="categories">
+                    🗂️ Categorieën
+                </button>
+
+
+                <button class="nav-button" data-page="availability">
+                    ⌛️ Beschikbaarheid
+                </button>
+
+
+                <button class="nav-button" data-page="settings">
+                    ⚙️ Instellingen
+                </button>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- CONTENT -->
+
+        <main class="content">
+
+
+            <!-- DASHBOARD -->
+
+            <section id="page-dashboard" class="page active">
+
+                <header>
+
+                    <h1>Dashboard</h1>
+
+                </header>
+
+
+                <section class="stats">
+
+                    <div class="stat-card">
+
+                        <span>Totaal aantal items</span>
+
+                        <strong id="total-items">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <span>Beschikbaar</span>
+
+                        <strong id="available-items">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <span>Onderhoud</span>
+
+                        <strong id="maintenance-items">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <span>Afgeschreven</span>
+
+                        <strong id="depreciated-items">
+                            0
+                        </strong>
+
+                    </div>
+
+                </section>
+
+
+                <section class="welcome-card">
+
+                    <h2>Techniek Inventaris</h2>
+
+                    <p>
+                        Gebruik het menu aan de linkerkant om
+                        de inventaris te beheren.
+                    </p>
+
+                </section>
+
+            </section>
+
+
+
+            <!-- INVENTORY -->
+
+            <section id="page-inventory" class="page">
+
+                <header class="page-header">
+
+                    <div>
+
+                        <h1>Inventaris</h1>
+
+                        <p>
+                            Beheer alle technische materialen en apparaten.
+                        </p>
+
+                    </div>
+
+
+                    <div class="header-actions">
+
+                        <button id="import-excel-button" class="secondary-button">
+                            📥 Excel importeren
+                        </button>
+
+                        <button id="add-item-button" class="primary-button">
+                            + Item toevoegen
+                        </button>
+
+                    </div>
+
+                </header>
+
+
+                <div class="inventory-tabs">
+
+                    <button type="button" id="actual-assets-tab" class="inventory-tab active">
+                        Actuele assets
+                    </button>
+
+                    <button type="button" id="historical-assets-tab" class="inventory-tab">
+                        Historische assets
+                    </button>
+
+                </div>
+
+
+                <!-- Actuele assets -->
+
+                <div id="actual-assets-content" class="inventory-tab-content active">
+
+                    <div class="inventory-toolbar">
+
+                        <input id="search-input" type="text" placeholder="🔍 Zoek op AssetID, barcode, merk, type...">
+
+                    </div>
+
+
+                    <div class="table-container">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Asset ID</th>
+                                    <th>Barcode</th>
+                                    <th>Categorie</th>
+                                    <th>Merk</th>
+                                    <th>Type</th>
+                                    <th>Serienummer</th>
+                                    <th></th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="inventory-table">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Historische assets -->
+
+                <div id="historical-assets-content" class="inventory-tab-content">
+
+                    <div class="inventory-toolbar">
+
+                        <input id="historical-search-input" type="text"
+                            placeholder="🔍 Zoek op AssetID, barcode, merk, type...">
+
+                    </div>
+
+
+                    <div class="table-container">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Asset ID</th>
+                                    <th>Barcode</th>
+                                    <th>Categorie</th>
+                                    <th>Merk</th>
+                                    <th>Type</th>
+                                    <th>Serienummer</th>
+                                    <th></th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="historical-inventory-table">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- ASSET DETAILS -->
+
+            <section id="page-asset-details" class="page">
+
+                <header class="page-header">
+                    <div>
+                        <button id="back-to-inventory" class="back-button">
+                            ← Terug naar inventaris
+                        </button>
+
+                        <h1 id="asset-details-title">
+                            Item
+                        </h1>
+
+                        <p>
+                            Bekijk en bewerk de gegevens van dit inventarisitem.
+                        </p>
+                    </div>
+
+                    <div class="header-actions">
+
+                        <button type="button" id="move-to-history-button" class="secondary-button">
+                            Naar historische assets
+                        </button>
+
+                    </div>
+                </header>
+
+
+                <div class="details-card">
+
+                    <form id="edit-item-form">
+
+                        <input type="hidden" name="id">
+
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+
+                                <label>
+                                    Asset ID
+                                </label>
+
+                                <input type="text" name="asset_id">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    Barcode
+                                </label>
+
+                                <input type="text" name="barcode">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    Categorie
+                                </label>
+
+                                <select name="category" id="edit-category-select">
+
+                                    <option value="">
+                                        Selecteer een categorie...
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    Merk
+                                </label>
+
+                                <input type="text" name="brand">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    Type
+                                </label>
+
+                                <input type="text" name="type">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    Serienummer
+                                </label>
+
+                                <input type="text" name="serial_number">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    Aanschafdatum
+                                </label>
+
+                                <input type="date" name="purchase_date">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    Aanschafprijs
+                                </label>
+
+                                <input type="number" step="0.01" name="purchase_price">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    Afschrijvingstermijn (jaar)
+                                </label>
+
+                                <input type="number" name="depreciation_period">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    Vervangingstermijn (jaar)
+                                </label>
+
+                                <input type="number" name="replacement_period">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="edit-replacement-year">
+                                    Vervangjaar
+                                </label>
+                                <input type="number" id="edit-replacement-year" name="replacement_year" min="1900"
+                                    max="2200" step="1">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    Eigenaar
+                                </label>
+
+                                <input type="text" name="owner">
+
+                            </div>
+
+
+                            <div class="form-group checkbox-group">
+
+                                <label>
+
+                                    <input type="checkbox" name="depreciated">
+
+                                    Afgeschreven
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Opmerking
+                            </label>
+
+                            <textarea name="notes" rows="4"></textarea>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Onderhoud
+                            </label>
+
+                            <textarea name="maintenance" rows="4"></textarea>
+
+                        </div>
+
+
+                        <div class="details-meta">
+
+                            <span id="created-at"></span>
+
+                            <span id="updated-at"></span>
+
+                        </div>
+
+
+                        <div class="modal-actions">
+
+                            <button type="submit" id="asset-details-save-button" class="primary-button">
+                                Opslaan
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- PLACEHOLDER PAGES -->
+
+            <section id="page-barcode" class="page">
+
+                <header class="page-header">
+                    <div>
+                        <h1>Barcode</h1>
+                        <p>
+                            Scan, zoek en print barcodelabels.
+                        </p>
+                    </div>
+                </header>
+
+                <div class="barcode-sections">
+
+                    <!-- BARCODE SCANNEN -->
+
+                    <section class="barcode-card">
+
+                        <div class="barcode-card-header">
+
+                            <div class="barcode-card-icon">
+                                🔍
+                            </div>
+
+                            <div>
+                                <h2>Barcode scannen</h2>
+
+                                <p>
+                                    Scan een barcode of voer deze handmatig in
+                                    om een inventarisitem te vinden.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div class="barcode-search">
+
+                            <input type="text" id="barcode-input" placeholder="Scan of typ barcode..."
+                                autocomplete="off">
+
+                            <button type="button" id="barcode-search-button" class="primary-button">
+                                Zoeken
+                            </button>
+
+                        </div>
+
+                        <div id="barcode-search-result" class="barcode-result">
+                        </div>
+
+                    </section>
+
+
+                    <!-- BARCODE LABEL PRINTEN -->
+
+                    <section class="barcode-card">
+
+                        <div class="barcode-card-header">
+
+                            <div class="barcode-card-icon">
+                                🖨️
+                            </div>
+
+                            <div>
+                                <h2>Barcode label printen</h2>
+
+                                <p>
+                                    Selecteer eerst een asset via de barcode scanner
+                                    om het bijbehorende label te printen.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div id="barcode-selected-asset" class="barcode-selected-asset">
+                            <p class="barcode-empty-message">
+                                Scan eerst een barcode om een asset te selecteren.
+                            </p>
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </section>
+
+
+            <section id="page-categories" class="page">
+
+                <header class="page-header">
+
+                    <div>
+
+                        <h1>Categorieën</h1>
+
+                        <p>
+                            Beheer de categorieën van de inventaris.
+                        </p>
+
+                    </div>
+
+                </header>
+
+
+                <div class="categories-container">
+
+                    <div class="category-actions">
+
+                        <button type="button" id="add-category-button" class="primary-button">
+                            Categorie toevoegen
+                        </button>
+
+                    </div>
+
+                    <dialog id="category-dialog">
+
+                        <form method="dialog" id="category-form">
+
+                            <h2>Nieuwe categorie</h2>
+
+                            <p>
+                                Vul de naam van de nieuwe categorie in.
+                            </p>
+
+                            <input type="text" id="new-category-name" placeholder="Categorienaam" autocomplete="off">
+
+                            <div class="category-dialog-actions">
+
+                                <button type="button" id="cancel-category-button">
+                                    Annuleren
+                                </button>
+
+                                <button type="submit" class="primary-button">
+                                    Toevoegen
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </dialog>
+
+                    <dialog id="category-success-dialog">
+
+                        <div class="category-success-content">
+
+                            <h2>Categorie toegevoegd</h2>
+
+                            <p id="category-success-message">
+                                De categorie is succesvol toegevoegd.
+                            </p>
+
+                            <div class="category-dialog-actions">
+
+                                <button type="button" id="category-success-button" class="primary-button">
+                                    OK
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </dialog>
+
+                    <div id="categories-list">
+                    </div>
+
+
+                    <div id="categories-list">
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section id="page-settings" class="page">
+
+                <header class="page-header">
+                    <div>
+                        <h1>Instellingen</h1>
+                        <p>
+                            Beheer de instellingen van Maasventaris.
+                        </p>
+                    </div>
+                </header>
+
+                <div class="settings-sections">
+
+                    <!-- ALGEMENE INSTELLINGEN -->
+
+                    <section class="settings-card">
+
+                        <div class="settings-card-header">
+
+                            <div class="settings-card-icon">
+                                🏢
+                            </div>
+
+                            <div>
+                                <h2>Algemene instellingen</h2>
+
+                                <p>
+                                    Algemene instellingen van de applicatie.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div class="settings-placeholder">
+                            <strong>Binnenkort beschikbaar</strong>
+
+                            <p>
+                                ...
+                            </p>
+                        </div>
+
+                    </section>
+
+
+                    <!-- BARCODE & PRINTER -->
+
+                    <section class="settings-card">
+
+                        <div class="settings-card-header">
+
+                            <div class="settings-card-icon">
+                                🖨️
+                            </div>
+
+                            <div>
+                                <h2>Barcode & printer</h2>
+
+                                <p>
+                                    Instellingen voor barcodes, labels
+                                    en printers.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div class="settings-placeholder">
+                            <strong>Binnenkort beschikbaar</strong>
+
+                            <p>
+                                ...
+                            </p>
+                        </div>
+
+                    </section>
+
+
+                    <!-- DATA & DATABASE -->
+
+                    <section class="settings-card">
+
+                        <div class="settings-card-header">
+
+                            <div class="settings-card-icon">
+                                💾
+                            </div>
+
+                            <div>
+                                <h2>Data & database</h2>
+
+                                <p>
+                                    Beheer de database en back-ups
+                                    van Maasventaris.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div class="settings-placeholder">
+                            <strong>Binnenkort beschikbaar</strong>
+
+                            <p>
+                                ...
+                            </p>
+                        </div>
+
+                    </section>
+
+
+                    <!-- OVER MAASVENTARIS -->
+
+                    <section class="settings-card">
+
+                        <div class="settings-card-header">
+
+                            <div class="settings-card-icon">
+                                ℹ️
+                            </div>
+
+                            <div>
+                                <h2>Over Maasventaris</h2>
+
+                                <p>
+                                    Informatie over deze applicatie.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div class="settings-about">
+
+                            <strong>Maas Techniek Inventaris</strong>
+
+                            <span>
+                                Versie 1.0.0
+                            </span>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </section>
+
+            <section id="page-availability" class="page">
+
+                <h1>Beschikbaarheid</h1>
+
+                <p>
+                    Hier komt Beschikbaarheid
+                </p>
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+
+
+    <!-- ADD ITEM MODAL -->
+
+    <div id="add-item-modal" class="modal hidden">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h2>Nieuw inventarisitem</h2>
+
+                <button id="close-modal">
+                    ×
+                </button>
+
+            </div>
+
+
+            <form id="add-item-form">
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Asset ID
+                        </label>
+
+                        <input type="text" name="asset_id">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Barcode
+                        </label>
+
+                        <input type="text" name="barcode">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Categorie
+                        </label>
+
+                        <select name="category" id="category-select">
+
+                            <option value="">
+                                Selecteer een categorie...
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Merk
+                        </label>
+
+                        <input type="text" name="brand">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Type
+                        </label>
+
+                        <input type="text" name="type">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Serienummer
+                        </label>
+
+                        <input type="text" name="serial_number">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Aanschafdatum
+                        </label>
+
+                        <input type="date" name="purchase_date">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Aanschafprijs
+                        </label>
+
+                        <input type="number" step="0.01" name="purchase_price">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Afschrijvingstermijn (jaar)
+                        </label>
+
+                        <input type="number" name="depreciation_period">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Vervangingstermijn (jaar)
+                        </label>
+
+                        <input type="number" name="replacement_period">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="add-replacement-year">
+                            Vervangjaar
+                        </label>
+
+                        <input type="number" id="add-replacement-year" name="replacement_year" min="1900" max="2200"
+                            step="1">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Eigenaar
+                        </label>
+
+                        <input type="text" name="owner">
+
+                    </div>
+
+
+                    <div class="form-group checkbox-group">
+
+                        <label>
+
+                            <input type="checkbox" name="depreciated">
+
+                            Afgeschreven
+
+                        </label>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Opmerking
+                    </label>
+
+                    <textarea name="notes" rows="3"></textarea>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Onderhoud
+                    </label>
+
+                    <textarea name="maintenance" rows="3"></textarea>
+
+                </div>
+
+
+                <div class="modal-actions">
+
+                    <button type="button" id="cancel-modal" class="secondary-button">
+                        Annuleren
+                    </button>
+
+
+                    <button type="submit" class="primary-button">
+                        Opslaan
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- EXCEL IMPORT MODAL -->
+
+    <div id="excel-import-modal" class="modal hidden">
+
+        <div class="modal-content excel-modal">
+
+            <div class="modal-header">
+
+                <h2>
+                    Excel inventaris importeren
+                </h2>
+
+                <button id="close-excel-modal">
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="excel-import-content">
+
+                <button id="select-excel-button" class="primary-button">
+                    📂 Excelbestand kiezen
+                </button>
+
+
+                <div id="excel-file-info" class="excel-file-info hidden">
+
+                    <strong>
+                        Bestand:
+                    </strong>
+
+                    <span id="excel-file-name"></span>
+
+                </div>
+
+                <div id="import-mode-container" class="import-mode-container hidden">
+
+                    <h3>
+                        Importmodus
+                    </h3>
+
+                    <label class="import-option">
+
+                        <input type="radio" name="import-mode" value="new-only" checked>
+
+                        <span>
+                            <strong>
+                                Alleen nieuwe items toevoegen
+                            </strong>
+
+                            <small>
+                                Bestaande inventaris blijft ongewijzigd.
+                            </small>
+                        </span>
+
+                    </label>
+
+
+                    <label class="import-option">
+
+                        <input type="radio" name="import-mode" value="update-existing">
+
+                        <span>
+                            <strong>
+                                Bestaande items bijwerken
+                            </strong>
+
+                            <small>
+                                Bestaande items worden bijgewerkt met de gegevens uit Excel.
+                            </small>
+
+                        </span>
+
+                    </label>
+
+
+                    <label class="import-option">
+
+                        <input type="radio" name="import-mode" value="new-and-update">
+
+                        <span>
+                            <strong>
+                                Nieuwe + bestaande items
+                            </strong>
+
+                            <small>
+                                Nieuwe items worden toegevoegd en bestaande items bijgewerkt.
+                            </small>
+
+                        </span>
+
+                    </label>
+
+
+                    <div id="import-summary" class="import-summary">
+
+                    </div>
+
+                </div>
+
+                <div id="excel-preview" class="excel-preview">
+
+                    <p>
+                        Kies een Excelbestand om
+                        een preview te bekijken.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div id="excel-import-loading" class="excel-import-loading hidden">
+                <div class="excel-import-loading-card">
+                    <div class="excel-import-spinner"></div>
+
+                    <h2>Excel importeren</h2>
+
+                    <p>
+                        Bezig met het importeren van de inventaris.
+                    </p>
+
+                    <span>
+                        Dit kan even duren, even geduld...
+                    </span>
+                </div>
+            </div>
+
+            <dialog id="excel-import-success-dialog" class="success-dialog">
+                <div class="success-dialog-content">
+
+                    <div class="success-dialog-icon">
+                        ✓
+                    </div>
+
+                    <h2>Import voltooid</h2>
+
+                    <p id="excel-import-success-message">
+                        De Excel-inventaris is succesvol geïmporteerd.
+                    </p>
+
+                    <button type="button" id="excel-import-success-button" class="primary-button">
+                        Doorgaan
+                    </button>
+
+                </div>
+            </dialog>
+
+
+            <div class="modal-actions">
+
+                <button type="button" id="cancel-excel-import" class="secondary-button">
+                    Annuleren
+                </button>
+
+                <button type="button" id="confirm-excel-import" class="primary-button">
+                    Importeren
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script type="module" src="renderer/renderer.js"></script>
+
+</body>
+
+</html>
