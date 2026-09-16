@@ -2,6 +2,7 @@ const { app, BrowserWindow } = require('electron');
 const initializeDatabase = require('./database');
 const createWindow = require('./windows/mainWindows');
 const registerIpcHandlers = require('./ipc');
+const initializeUpdater = require('./utils/updater');
 
 app.whenReady().then(async() => {
 
@@ -10,6 +11,7 @@ app.whenReady().then(async() => {
     registerIpcHandlers(db);
 
     createWindow();
+    initializeUpdater();
 
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) {
